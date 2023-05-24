@@ -1,6 +1,6 @@
 <main>
     <h1>Browser</h1>
-    <form action="" method="">
+    <form action="/" method="GET">
         <input type="text" class="search" name="search" placeholder="Search...">
         <input type="number" name="from" class="difficulty" placeholder="Difficulty from...">
         <span>-</span>
@@ -11,6 +11,6 @@
     {{#each cubes}}
     {{>cube}}
     {{else}}
-    <p>There are no cubes yet.</p>
+    <p>NO CUBES WERE FOUND!</p>
     {{/each}}
 </main>
