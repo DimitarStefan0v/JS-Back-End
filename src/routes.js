@@ -10,7 +10,7 @@ router.use('/users', userController);
 router.use('/cubes', cubeController);
 router.use('/accessories', accessoryController);
 router.get('*', (req, res) => {
-    res.redirect('404');
+    res.render('404');
 });
 
 module.exports = router;
