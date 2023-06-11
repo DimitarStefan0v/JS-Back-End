@@ -5,6 +5,13 @@ const userSchema = new mongoose.Schema({
     password: String,
 });
 
+userSchema.virtual('repeatPassword')
+    .set(function(value) {
+        if (value !== this.password) {
+            throw new mongoose.MongooseError('Passwords don\'t match');
+        }
+    });
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
