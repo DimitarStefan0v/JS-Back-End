@@ -1,1 +1,1 @@
-# JS-Back-End
+# Simple demo project to get familiar with the development of server-side JavaScript applications on the Node.js platform using Express.js as a framework and MongoDB along with Mongoose library for retrieving data from it.
