@@ -1,6 +1,8 @@
-const User = require('../models/User');
-
 const bcrypt = require('bcrypt');
+
+const User = require('../models/User');
+const jwt = require('../lib/jwt');
+const SECRET = 'a03dba74-967f-4b24-810a-51c12a9ecbc7';
 
 exports.login = async (username, password) => {
     const user = await User.findOne({ username });
@@ -15,7 +17,15 @@ exports.login = async (username, password) => {
         throw new Error('Invalid password');
     }
 
-    
+    const payload = {
+        id: user._id,
+        username: user.username,
+        email: user.email
+    };
+
+    const token = await jwt.sign(payload, SECRET, { expiresIn: '2d' });
+
+    return token;
 };
 
 exports.register = async (userData) => {
