@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
 
         res.redirect('/');
     } catch (err) {
-        res.render('users/login', { errors: extractErrorMessages(err) });
+        res.render('users/login', { errors: extractErrorMessages(err), username });
     }
 });
 
@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
         res.cookie(TOKEN_KEY, token);
         res.redirect('/');
     } catch (err) {
-        res.render('users/register', { errors: extractErrorMessages(err) });
+        res.render('users/register', { errors: extractErrorMessages(err), username, email });
     }
 
 });
