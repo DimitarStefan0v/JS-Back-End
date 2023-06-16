@@ -17,13 +17,7 @@ exports.login = async (username, password) => {
         throw new Error('Invalid password');
     }
 
-    const payload = {
-        id: user._id,
-        username: user.username,
-        email: user.email
-    };
-
-    const token = await jwt.sign(payload, SECRET, { expiresIn: '2d' });
+    const token = await generateToken(user);
 
     return token;
 };
@@ -35,9 +29,20 @@ exports.register = async (userData) => {
         throw new Error('Username already exists');
     }
 
-    return User.create(userData);
+    const createdUser = await User.create(userData);
+
+    const token = await generateToken(createdUser);
+
+    return token;
 };
 
-exports.logout = () => {
+async function generateToken(user) {
+    const payload = {
+        id: user._id,
+        username: user.username,
+        email: user.email
+    };
 
-};
+    const token = await jwt.sign(payload, SECRET, { expiresIn: '2d' });
+    return token;
+}
