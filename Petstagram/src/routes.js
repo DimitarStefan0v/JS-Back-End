@@ -7,7 +7,7 @@ router.use(homeController);
 router.use('/users', userController);
 
 router.get('*', (req, res) => {
-    res.render('404');
+    res.redirect('/404');
 });
 
 module.exports = router;
