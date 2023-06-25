@@ -3,6 +3,12 @@ const router = require('express').Router();
 const photoManager = require('../managers/photoManager');
 const { extractErrorMessages } = require('../utils/errorHelpers');
 
+router.get('/', async (req, res) => {
+    const photos = await photoManager.getAll().lean();
+
+    res.render('photos', { photos });
+});
+
 router.get('/create', (req, res) => {
     res.render('photos/create');
 });
