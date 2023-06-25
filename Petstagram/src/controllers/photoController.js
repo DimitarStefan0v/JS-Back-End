@@ -28,4 +28,25 @@ router.post('/create', async (req, res) => {
     }
 });
 
+router.get('/:photoId/details', async (req, res) => {
+    const photoId = req.params.photoId;
+    const photo = await photoManager.getById(photoId).lean();
+    const isOwner = req.user?.id == photo.owner?._id;
+
+    res.render('photos/details', { photo, isOwner });
+});
+
+router.get('/:photoId/delete', async (req, res) => {
+    const photoId = req.params.photoId
+
+    try {
+        await photoManager.delete(photoId);
+
+        res.redirect('/photos');
+    } catch (err) {
+        res.render(`/photos/${photoId}/details`, { errors: extractErrorMessages(err) })
+    }
+    
+});
+
 module.exports = router;
