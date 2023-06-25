@@ -44,9 +44,29 @@ router.get('/:photoId/delete', async (req, res) => {
 
         res.redirect('/photos');
     } catch (err) {
-        res.render(`/photos/${photoId}/details`, { errors: extractErrorMessages(err) })
+        const photo = await photoManager.getById(photoId).lean();
+        res.render(`photos/details`, { photo, errors: extractErrorMessages(err) })
     }
+
+});
+
+router.get('/:photoId/edit', async (req, res) => {
+    const photoId = req.params.photoId
+    const photo = await photoManager.getById(photoId).lean();
+
+    res.render('photos/edit', { photo });
+});
+
+router.post('/:photoId/edit', async (req, res) => {
+    const photoData = req.body;
     
+    try {
+        await photoManager.edit(req.params.photoId, photoData);
+
+        res.redirect('/photos');
+    } catch (err) {
+        res.render('photos/edit', { errors: extractErrorMessages(err), ...photoData });
+    }
 });
 
 module.exports = router;
